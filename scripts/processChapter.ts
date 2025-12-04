@@ -29,15 +29,8 @@ Do not include any text outside of the JSON object.
 
 `.trim();
 
-// interface PanelWord {
-//   panelId: string;
-//   wordId: string;
-// }
 
-interface PanelGrammaticalStructure {
-  panelId: string;
-  grammaticalStructureId: string;
-}
+
 
 interface Word {
   japanese: string;
@@ -46,14 +39,6 @@ interface Word {
   partOfSpeech: string;
   jlptLevel: number;
 }
-
-// interface Panel {
-//   id: string;
-//   chapterId: string;
-//   japaneseText: string;
-//   translation: string;
-//   pageNumber: number;
-// }
 
 interface GrammaticalStructure {
   name: string;
@@ -143,6 +128,7 @@ async function askGeminiForPagePdf(pagePdfBytes: Uint8Array): Promise<GeminiResu
       if (attempt === maxAttempts) {
         throw err;
       }
+      
       console.warn(
         `Gemini call failed on attempt ${attempt}/${maxAttempts}; retrying immediately...`
       );
