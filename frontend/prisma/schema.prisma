@@ -29,6 +29,7 @@ model Chapter {
   id          String   @id @default(cuid())
   title       String
   description String?
+  filePath    String?  // Path to the PDF file
   orderIndex  Int      @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -44,6 +45,13 @@ model Panel {
   orderIndex   Int
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  // PDF position metadata
+  pageNumber Int?  // Page number in the PDF (0-indexed)
+  x          Int?  // X coordinate of the panel on the page (in pixels)
+  y          Int?  // Y coordinate of the panel on the page (in pixels)
+  width      Int?  // Width of the panel (in pixels)
+  height     Int?  // Height of the panel (in pixels)
 
   chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
