@@ -1,15 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 // Configure PDF.js worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-export default function PDFViewer() {
+interface PDFViewerProps {
+  initialFile?: string;
+}
+
+export default function PDFViewer({ initialFile }: PDFViewerProps) {
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [pdfFile, setPdfFile] = useState<string | null>(null);
+  const [pdfFile, setPdfFile] = useState<string | null>(initialFile || null);
+
+  useEffect(() => {
+    if (initialFile) {
+      setPdfFile(initialFile);
+    }
+  }, [initialFile]);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
