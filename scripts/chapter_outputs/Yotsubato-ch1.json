@@ -1,0 +1,831 @@
+{
+  "chapterId": "chapter1",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "words": [],
+      "grammars": []
+    },
+    {
+      "pageNumber": 2,
+      "words": [
+        {
+          "japanese": "よつば",
+          "reading": "よつば",
+          "meaning": "Yotsuba (character name); four-leaf clover",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "と",
+          "reading": "と",
+          "meaning": "and; with",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "引っ越し",
+          "reading": "ひっこし",
+          "meaning": "moving (residence); relocation",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "第",
+          "reading": "だい",
+          "meaning": "No. ~; ~th (prefix for numbering)",
+          "partOfSpeech": "Prefix",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "1",
+          "reading": "いち",
+          "meaning": "one",
+          "partOfSpeech": "Number",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "話",
+          "reading": "わ",
+          "meaning": "chapter; episode (counter)",
+          "partOfSpeech": "Counter",
+          "jlptLevel": 3
+        }
+      ],
+      "grammars": [
+        {
+          "name": "Noun と Noun (Listing/Conjunction)",
+          "pattern": "Noun1 + と + Noun2",
+          "explanation": "Connects two or more nouns, meaning 'Noun1 and Noun2'.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "第 (Ordinal Number Prefix)",
+          "pattern": "第 + [Number] + [Counter]",
+          "explanation": "Used as a prefix to form ordinal numbers, typically for chapters, episodes, or ranks, meaning 'the Nth [Counter]'.",
+          "jlptLevel": 3
+        }
+      ]
+    },
+    {
+      "pageNumber": 3,
+      "words": [
+        {
+          "japanese": "お",
+          "reading": "お",
+          "meaning": "Oh! / Hey! (Interjection)",
+          "partOfSpeech": "Interjection",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "もうすぐ",
+          "reading": "もうすぐ",
+          "meaning": "Soon, very soon, in a moment",
+          "partOfSpeech": "Adverb",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "だ",
+          "reading": "だ",
+          "meaning": "Is, am, are (plain form of です)",
+          "partOfSpeech": "Copula",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "ぞ",
+          "reading": "ぞ",
+          "meaning": "Particle indicating emphasis or assertion (masculine speech)",
+          "partOfSpeech": "Sentence-ending particle",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "よつば",
+          "reading": "よつば",
+          "meaning": "Yotsuba (a name)",
+          "partOfSpeech": "Proper Noun",
+          "jlptLevel": null
+        },
+        {
+          "japanese": "おーーっ",
+          "reading": "おーーっ",
+          "meaning": "Oh! Wow! (Expressing surprise, wonder, excitement)",
+          "partOfSpeech": "Interjection",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "すげぇ",
+          "reading": "すげぇ",
+          "meaning": "Amazing, awesome, incredible (casual, slang for すごい)",
+          "partOfSpeech": "I-adjective (informal)",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "とーちゃん",
+          "reading": "とうちゃん",
+          "meaning": "Dad, Daddy (informal)",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "ここ",
+          "reading": "ここ",
+          "meaning": "Here, this place",
+          "partOfSpeech": "Pronoun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "家",
+          "reading": "いえ",
+          "meaning": "House, home",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "が",
+          "reading": "が",
+          "meaning": "Subject particle",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "いっぱい",
+          "reading": "いっぱい",
+          "meaning": "Full, a lot, many",
+          "partOfSpeech": "Adverb",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "ある",
+          "reading": "ある",
+          "meaning": "To exist, to be (for inanimate objects)",
+          "partOfSpeech": "Verb (intransitive)",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "な",
+          "reading": "な",
+          "meaning": "Particle indicating confirmation, agreement, or mild assertion/exclamation",
+          "partOfSpeech": "Sentence-ending particle",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "そー",
+          "reading": "そう",
+          "meaning": "That's right, so (casual for そう)",
+          "partOfSpeech": "Adverb",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "だろー",
+          "reading": "だろう",
+          "meaning": "Right? Isn't it? (Casual for でしょう, expressing conjecture or seeking agreement)",
+          "partOfSpeech": "Auxiliary verb (informal)",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "お店",
+          "reading": "おみせ",
+          "meaning": "Shop, store",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "も",
+          "reading": "も",
+          "meaning": "Also, too",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "か",
+          "reading": "か",
+          "meaning": "Question particle",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        }
+      ],
+      "grammars": [
+        {
+          "name": "Plain form copula + ぞ particle",
+          "pattern": "Noun/Adverb + だ + ぞ",
+          "explanation": "Attaches to the plain form of a noun or adverb (with だ) to add emphasis, conviction, or a strong assertion. Often used in masculine speech.",
+          "jlptLevel": 4
+        },
+        {
+          "name": "Noun subject + Quantity + Existence",
+          "pattern": "Noun + が + いっぱい + ある",
+          "explanation": "Indicates that there are a lot of a particular inanimate object at a given location.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Sentence-ending particle な (informal confirmation/exclamation)",
+          "pattern": "(Plain form of verb/adj/noun) + な",
+          "explanation": "Used at the end of a sentence to express confirmation, agreement, or a mild exclamation. It can also invite agreement from the listener.",
+          "jlptLevel": 4
+        },
+        {
+          "name": "Plain form + だろう/だろー (conjecture or seeking agreement)",
+          "pattern": "Plain form verb/adj/noun + (だ) + だろう",
+          "explanation": "Expresses conjecture, probability, or asks for confirmation. In casual speech, it becomes だろ or だろー.",
+          "jlptLevel": 4
+        },
+        {
+          "name": "Noun + も + ある + ぞ (existence with emphasis)",
+          "pattern": "Noun + も + ある + ぞ",
+          "explanation": "Indicates the existence of something 'also' or 'too', with an added emphasis or assertion using ぞ.",
+          "jlptLevel": 4
+        },
+        {
+          "name": "Noun + も + か (question with 'also')",
+          "pattern": "Noun + も + か",
+          "explanation": "Forms a question asking if something 'also' applies or exists. The rising intonation implies surprise or incredulity.",
+          "jlptLevel": 5
+        }
+      ]
+    },
+    {
+      "pageNumber": 4,
+      "words": [
+        {
+          "japanese": "すげぇ",
+          "reading": "すげぇ",
+          "meaning": "amazing; incredible (colloquial)",
+          "partOfSpeech": "Adjective",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "人",
+          "reading": "ひと",
+          "meaning": "person; people",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "が",
+          "reading": "が",
+          "meaning": "subject particle",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "いっぱい",
+          "reading": "いっぱい",
+          "meaning": "full; a lot; many",
+          "partOfSpeech": "Adverb; Noun",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "いる",
+          "reading": "いる",
+          "meaning": "to be; to exist (for living things)",
+          "partOfSpeech": "Verb",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "今日",
+          "reading": "きょう",
+          "meaning": "today",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "は",
+          "reading": "は",
+          "meaning": "topic particle",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "祭り",
+          "reading": "まつり",
+          "meaning": "festival",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "か",
+          "reading": "か",
+          "meaning": "question particle",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "学校",
+          "reading": "がっこう",
+          "meaning": "school",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "だ",
+          "reading": "だ",
+          "meaning": "is (informal copula)",
+          "partOfSpeech": "Auxiliary verb; Copula",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "そういや",
+          "reading": "そういや",
+          "meaning": "speaking of which; now that you mention it (colloquial)",
+          "partOfSpeech": "Conjunction; Adverbial expression",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "明日",
+          "reading": "あした",
+          "meaning": "tomorrow",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "から",
+          "reading": "から",
+          "meaning": "from; since (indicating a starting point)",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "夏休み",
+          "reading": "なつやすみ",
+          "meaning": "summer vacation",
+          "partOfSpeech": "Noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "なぁ",
+          "reading": "なぁ",
+          "meaning": "sentence-ending particle (expressing emotion, emphasis, or seeking agreement)",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 4
+        }
+      ],
+      "grammars": [
+        {
+          "name": "Noun が いる/ある (Existence)",
+          "pattern": "Noun が いる / ある",
+          "explanation": "Indicates the existence of a living thing (いる) or a non-living thing (ある). 'が' marks the subject of existence.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Particle は (Topic Marker)",
+          "pattern": "[X]は [Y]です/だ",
+          "explanation": "Marks the topic of the sentence. The part before 'は' is what the sentence is about.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Particle か (Question Marker)",
+          "pattern": "[Sentence]か",
+          "explanation": "Turns a declarative sentence into an interrogative one (a question).",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Noun + だ (Informal Copula)",
+          "pattern": "Noun だ",
+          "explanation": "The informal equivalent of 'です', used to state that something is a noun. Often used in casual speech.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Noun + から (Starting Point)",
+          "pattern": "Noun から",
+          "explanation": "Indicates the starting point in time or space, or the source of something.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "そういや (Colloquial 'Speaking of which')",
+          "pattern": "そういや ~",
+          "explanation": "A colloquial expression, short for 'そういえば (sō ieba)', meaning 'speaking of which,' 'now that you mention it,' or 'that reminds me.' Used to introduce a new related topic.",
+          "jlptLevel": 3
+        },
+        {
+          "name": "Sentence-ending particle なぁ",
+          "pattern": "[Sentence] なぁ",
+          "explanation": "A sentence-ending particle expressing personal feeling, emphasis, a sigh, or seeking agreement. It often carries a contemplative or introspective nuance, similar to 'ね' but can be stronger.",
+          "jlptLevel": 4
+        }
+      ]
+    },
+    {
+      "pageNumber": 5,
+      "words": [
+        {
+          "japanese": "おねーちゃん",
+          "reading": "おねーちゃん",
+          "meaning": "older sister (colloquial)",
+          "partOfSpeech": "noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "が",
+          "reading": "が",
+          "meaning": "subject particle",
+          "partOfSpeech": "particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "手ぇ",
+          "reading": "てぇ",
+          "meaning": "hand (colloquial, object marker, from 手を)",
+          "partOfSpeech": "noun/particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "振った",
+          "reading": "ふった",
+          "meaning": "waved (past tense of 振る)",
+          "partOfSpeech": "verb",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "とーちゃん",
+          "reading": "とーちゃん",
+          "meaning": "father (colloquial)",
+          "partOfSpeech": "noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "も",
+          "reading": "も",
+          "meaning": "also; too",
+          "partOfSpeech": "particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "振れ",
+          "reading": "ふれ",
+          "meaning": "wave! (imperative of 振る)",
+          "partOfSpeech": "verb",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "手",
+          "reading": "て",
+          "meaning": "hand",
+          "partOfSpeech": "noun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "離せない",
+          "reading": "はなせない",
+          "meaning": "cannot let go (potential negative of 離す)",
+          "partOfSpeech": "verb",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "から",
+          "reading": "から",
+          "meaning": "because; since",
+          "partOfSpeech": "particle/conjunction",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "な",
+          "reading": "な",
+          "meaning": "sentence-ending particle (emphasis, seeking agreement, mild command)",
+          "partOfSpeech": "particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "俺",
+          "reading": "おれ",
+          "meaning": "I; me (masculine, informal)",
+          "partOfSpeech": "pronoun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "の",
+          "reading": "の",
+          "meaning": "possessive particle",
+          "partOfSpeech": "particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "分",
+          "reading": "ぶん",
+          "meaning": "share; portion",
+          "partOfSpeech": "noun",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "よつば",
+          "reading": "よつば",
+          "meaning": "Yotsuba (a proper name)",
+          "partOfSpeech": "proper noun",
+          "jlptLevel": 0
+        },
+        {
+          "japanese": "振って",
+          "reading": "ふって",
+          "meaning": "waving (te-form of 振る)",
+          "partOfSpeech": "verb",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "くれ",
+          "reading": "くれ",
+          "meaning": "do for me! (imperative of くれる)",
+          "partOfSpeech": "verb",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "あんまり",
+          "reading": "あんまり",
+          "meaning": "too much; not very (colloquial)",
+          "partOfSpeech": "adverb",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "乗り出す",
+          "reading": "のりだす",
+          "meaning": "to lean out; to stick out",
+          "partOfSpeech": "verb",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "と",
+          "reading": "と",
+          "meaning": "if; when (conditional particle)",
+          "partOfSpeech": "particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "危ない",
+          "reading": "あぶない",
+          "meaning": "dangerous",
+          "partOfSpeech": "adjective",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "ぞー",
+          "reading": "ぞー",
+          "meaning": "sentence-ending particle (emphasis; warning, masculine speech)",
+          "partOfSpeech": "particle",
+          "jlptLevel": 5
+        }
+      ],
+      "grammars": [
+        {
+          "name": "Verb Past Tense (た-form)",
+          "pattern": "Verb[ます-form] → Verb[た-form]",
+          "explanation": "The past tense form of verbs, used to describe actions that have been completed. (e.g., 振ります → 振った)",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Imperative Form (命令形)",
+          "pattern": "Group 1: Verb[う-ending] → Verb[え-ending]; Group 2: Verb[る-ending] → Verb[ろ]",
+          "explanation": "Used to give direct commands or orders. Can sound strong or rude, often softened with other expressions. (e.g., 振る → 振れ)",
+          "jlptLevel": 4
+        },
+        {
+          "name": "Subject Marker が (ga)",
+          "pattern": "Noun + が + Verb/Adjective",
+          "explanation": "Marks the subject of a sentence. It can also introduce new information or specify the subject in a descriptive clause.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "\"Also/Too\" Particle も (mo)",
+          "pattern": "Noun/Phrase + も",
+          "explanation": "Indicates that something is 'also' or 'too' true for the marked item, or 'even' in negative sentences.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Potential Negative Form",
+          "pattern": "Verb[る] → Verb[られる] (potential) → Verb[られない] (potential negative); Verb[う] → Verb[える] (potential) → Verb[えない] (potential negative)",
+          "explanation": "Expresses inability to perform an action. For group 1 verbs, change the final う-vowel sound to え and add ない (e.g., 離す → 離せない).",
+          "jlptLevel": 3
+        },
+        {
+          "name": "Reason/Cause から (kara)",
+          "pattern": "Clause + から",
+          "explanation": "Indicates the reason or cause for a preceding statement. Similar to 'because' or 'so'.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Sentence-Ending Particle な (na)",
+          "pattern": "Sentence + な",
+          "explanation": "Used at the end of a sentence to express emphasis, seek agreement, or give a mild command/advice (informal).",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Possessive Particle の (no)",
+          "pattern": "Noun₁ + の + Noun₂",
+          "explanation": "Connects two nouns, indicating possession or description (Noun₂ of Noun₁).",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Requesting a Favor (~てくれ)",
+          "pattern": "Verb[て-form] + くれ",
+          "explanation": "An informal and direct way to ask someone to do something for you. くれ is the imperative form of くれる (kureru).",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Conditional と (to)",
+          "pattern": "Verb[plain form] + と / Noun + だ + と / Adjective[い] + と / Adjective[な] + だ + と",
+          "explanation": "Expresses a natural or inevitable consequence: 'if A, then B will certainly happen' or 'when A happens, B happens'.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Sentence-Ending Particle ぞ (zo)",
+          "pattern": "Sentence + ぞ",
+          "explanation": "Used at the end of a sentence by male speakers to add emphasis, conviction, or a warning.",
+          "jlptLevel": 5
+        }
+      ]
+    },
+    {
+      "pageNumber": 6,
+      "words": [
+        {
+          "japanese": "ほーら",
+          "reading": "ほーら",
+          "meaning": "Look!, See!",
+          "partOfSpeech": "Interjection",
+          "jlptLevel": null
+        },
+        {
+          "japanese": "着いた",
+          "reading": "ついた",
+          "meaning": "arrived (past tense of to arrive)",
+          "partOfSpeech": "Verb",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "ぞ",
+          "reading": "ぞ",
+          "meaning": "(sentence-ending particle for emphasis, assertion)",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "どこ",
+          "reading": "どこ",
+          "meaning": "where",
+          "partOfSpeech": "Interrogative pronoun",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "に",
+          "reading": "に",
+          "meaning": "at, in, to (location particle)",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "って",
+          "reading": "って",
+          "meaning": "(quotative particle, questioning repetition, 'what do you mean by...')",
+          "partOfSpeech": "Particle",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "そりゃ",
+          "reading": "そりゃ",
+          "meaning": "that is (colloquial contraction of それは)",
+          "partOfSpeech": "Colloquial expression",
+          "jlptLevel": 4
+        },
+        {
+          "japanese": "おまえ",
+          "reading": "おまえ",
+          "meaning": "you (informal, sometimes rude)",
+          "partOfSpeech": "Pronoun",
+          "jlptLevel": 3
+        },
+        {
+          "japanese": "あ",
+          "reading": "あ",
+          "meaning": "Ah!, Oh! (interjection of surprise or realization)",
+          "partOfSpeech": "Interjection",
+          "jlptLevel": 5
+        },
+        {
+          "japanese": "ジャンボ",
+          "reading": "ジャンボ",
+          "meaning": "Jumbo (loanword, likely a name)",
+          "partOfSpeech": "Noun",
+          "jlptLevel": null
+        },
+        {
+          "japanese": "だ",
+          "reading": "だ",
+          "meaning": "is, it is (informal copula)",
+          "partOfSpeech": "Copula",
+          "jlptLevel": 5
+        }
+      ],
+      "grammars": [
+        {
+          "name": "Past Tense (~ta form)",
+          "pattern": "Verb stem + た/だ",
+          "explanation": "Indicates an action completed in the past.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Sentence-ending particle ぞ (zo)",
+          "pattern": "Verb/Noun/Adjective + ぞ",
+          "explanation": "An assertive or emphatic sentence-ending particle, often used by male speakers to express strong conviction, warning, or a call to action.",
+          "jlptLevel": 3
+        },
+        {
+          "name": "Interrogative with 'ni' (location particle)",
+          "pattern": "疑問詞 (どこ/いつ/なに) + に + 動詞 (e.g., 着く)",
+          "explanation": "Using a question word (where, when, what) followed by the particle に to specify the target or location of the verb's action.",
+          "jlptLevel": 5
+        },
+        {
+          "name": "Quotative particle って (tte) (informal)",
+          "pattern": "Noun/Phrase + って",
+          "explanation": "An informal version of と (to) when quoting or referring to something. Here, it's used to repeat or question something that was just said, often with a nuance of 'What do you mean by...?' or 'When you say...'.",
+          "jlptLevel": 4
+        },
+        {
+          "name": "Colloquial 'Sorya'",
+          "pattern": "そりゃ",
+          "explanation": "Colloquial contraction of それは (sore wa), used to express 'that is' or 'that's obvious' in an informal context.",
+          "jlptLevel": 4
+        },
+        {
+          "name": "Informal Copula だ (da)",
+          "pattern": "Noun + だ",
+          "explanation": "The informal equivalent of です, used to state that something 'is' a noun.",
+          "jlptLevel": 5
+        }
+      ]
+    },
+    {
+      "pageNumber": 7,
+      "words": [
+        {
+          "japanese": "ばー",
+          "reading": "ばー",
+          "meaning": "Bang; Thump (sound effect, possibly for a door opening quickly)",
+          "partOfSpeech": "Sound Effect",
+          "jlptLevel": "N/A"
+        },
+        {
+          "japanese": "よう",
+          "reading": "よう",
+          "meaning": "Yo; Hey (casual greeting)",
+          "partOfSpeech": "Interjection",
+          "jlptLevel": "N5"
+        },
+        {
+          "japanese": "うす",
+          "reading": "うす",
+          "meaning": "Yes; Understood (casual, often masculine, affirmative response)",
+          "partOfSpeech": "Interjection",
+          "jlptLevel": "N/A"
+        },
+        {
+          "japanese": "ばん",
+          "reading": "ばん",
+          "meaning": "Bang; Thump (sound effect, possibly for a door closing or an impact)",
+          "partOfSpeech": "Sound Effect",
+          "jlptLevel": "N/A"
+        },
+        {
+          "japanese": "ジャンボー",
+          "reading": "ジャンボー",
+          "meaning": "Jumbo (a playful name or exclamation, likely a nickname for a character)",
+          "partOfSpeech": "Noun; Interjection",
+          "jlptLevel": "N/A"
+        },
+        {
+          "japanese": "ひさしぶり",
+          "reading": "ひさしぶり",
+          "meaning": "Long time no see; It's been a while",
+          "partOfSpeech": "Noun; Adjectival Noun",
+          "jlptLevel": "N4"
+        },
+        {
+          "japanese": "だなー",
+          "reading": "だなー",
+          "meaning": "It is; isn't it? (casual sentence-ending particle expressing agreement or feeling)",
+          "partOfSpeech": "Sentence-ending particle",
+          "jlptLevel": "N4"
+        },
+        {
+          "japanese": "お",
+          "reading": "お",
+          "meaning": "Oh; Hey (interjection, often preceding a name or used as a call)",
+          "partOfSpeech": "Interjection",
+          "jlptLevel": "N/A"
+        },
+        {
+          "japanese": "よつば",
+          "reading": "よつば",
+          "meaning": "Yotsuba (character name)",
+          "partOfSpeech": "Proper Noun",
+          "jlptLevel": "N/A"
+        }
+      ],
+      "grammars": [
+        {
+          "name": "だなー (Sentence-ending particle)",
+          "pattern": "Noun/な-adjective + だなー; Verb/い-adjective (plain form) + なー",
+          "explanation": "A casual sentence-ending particle used to express agreement, confirmation, or a personal feeling/impression. The 'ー' extends the sound, adding emphasis or a relaxed tone. Often used by male speakers or in very casual female speech. In this context 'ひさしぶりだなー' means 'It's been a long time, hasn't it!'",
+          "jlptLevel": "N4"
+        }
+      ]
+    }
+  ]
+}
