@@ -5,10 +5,141 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Performance tracking
+  wordAttempts               WordAttempt[]
+  grammaticalStructureAttempts GrammaticalStructureAttempt[]
+}
+
+model Chapter {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  orderIndex  Int      @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  panels Panel[]
+}
+
+model Panel {
+  id           String   @id @default(cuid())
+  chapterId    String
+  japaneseText String   @db.Text
+  translation  String?  @db.Text
+  orderIndex   Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  // Many-to-many relationships
+  words                 PanelWord[]
+  grammaticalStructures PanelGrammaticalStructure[]
+
+  @@unique([chapterId, orderIndex])
+  @@index([chapterId])
+}
+
+model Word {
+  id           String   @id @default(cuid())
+  japanese     String   @unique
+  reading      String?  // Hiragana reading
+  meaning      String
+  partOfSpeech String?  // noun, verb, adjective, etc.
+  jlptLevel    Int?     // 5, 4, 3, 2, 1
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  panels   PanelWord[]
+  attempts WordAttempt[]
+
+  @@index([jlptLevel])
+}
+
+model GrammaticalStructure {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  pattern     String   // e.g., "〜ている", "Verb stem + たい"
+  explanation String   @db.Text
+  jlptLevel   Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  panels   PanelGrammaticalStructure[]
+  attempts GrammaticalStructureAttempt[]
+
+  @@index([jlptLevel])
+}
+
+// Junction table: Panel <-> Word
+model PanelWord {
+  id      String @id @default(cuid())
+  panelId String
+  wordId  String
+
+  panel Panel @relation(fields: [panelId], references: [id], onDelete: Cascade)
+  word  Word  @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([panelId, wordId])
+  @@index([wordId])
+}
+
+// Junction table: Panel <-> GrammaticalStructure
+model PanelGrammaticalStructure {
+  id                     String @id @default(cuid())
+  panelId                String
+  grammaticalStructureId String
+
+  panel                Panel                @relation(fields: [panelId], references: [id], onDelete: Cascade)
+  grammaticalStructure GrammaticalStructure @relation(fields: [grammaticalStructureId], references: [id], onDelete: Cascade)
+
+  @@unique([panelId, grammaticalStructureId])
+  @@index([grammaticalStructureId])
+}
+
+// Track user performance on words
+model WordAttempt {
+  id        String   @id @default(cuid())
+  userId    String
+  wordId    String
+  correct   Boolean  // true = did well, false = did poorly
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  word Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@index([userId, wordId])
+  @@index([wordId])
+  @@index([createdAt])
+}
+
+// Track user performance on grammatical structures
+model GrammaticalStructureAttempt {
+  id                     String   @id @default(cuid())
+  userId                 String
+  grammaticalStructureId String
+  correct                Boolean  // true = did well, false = did poorly
+  createdAt              DateTime @default(now())
+
+  user                 User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  grammaticalStructure GrammaticalStructure @relation(fields: [grammaticalStructureId], references: [id], onDelete: Cascade)
+
+  @@index([userId, grammaticalStructureId])
+  @@index([grammaticalStructureId])
+  @@index([createdAt])
 }
