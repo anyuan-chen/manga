@@ -1,4 +1,5 @@
 import { prisma } from './db';
+import { getUserPerformanceData } from './userContext';
 
 export interface DecisionResult {
   shouldAsk: boolean;
@@ -53,42 +54,20 @@ export async function decidePanelQuestions(
     };
   }
 
-  // Get user performance for all concepts
-  const wordPerformance = await Promise.all(
-    panel.words.map(async (pw: any) => {
-      const attempts = await prisma.wordAttempt.findMany({
-        where: {
-          userId,
-          wordId: pw.word.id,
-        },
-      });
+  // Get user performance for all concepts (cached)
+  const performanceData = await getUserPerformanceData(userId, panelId);
 
-      const correctCount = attempts.filter(a => a.correct).length;
-      return {
-        successRate: attempts.length > 0 ? correctCount / attempts.length : 0,
-        attemptCount: attempts.length,
-      };
-    })
-  );
-
-  const grammarPerformance = await Promise.all(
-    panel.grammaticalStructures.map(async (pgs: any) => {
-      const attempts = await prisma.grammaticalStructureAttempt.findMany({
-        where: {
-          userId,
-          grammaticalStructureId: pgs.grammaticalStructure.id,
-        },
-      });
-
-      const correctCount = attempts.filter(a => a.correct).length;
-      return {
-        successRate: attempts.length > 0 ? correctCount / attempts.length : 0,
-        attemptCount: attempts.length,
-      };
-    })
-  );
-
-  const allPerformance = [...wordPerformance, ...grammarPerformance];
+  // Combine all performance data
+  const allPerformance = [
+    ...performanceData.words.map(w => ({
+      successRate: w.successRate,
+      attemptCount: w.attemptCount,
+    })),
+    ...performanceData.grammar.map(g => ({
+      successRate: g.successRate,
+      attemptCount: g.attemptCount,
+    })),
+  ];
 
   // Rule 3: Skip if ALL concepts are mastered (100% success with 2+ attempts)
   const allMastered = allPerformance.every(
