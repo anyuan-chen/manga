@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
-// Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Configure PDF.js worker - using local file matching react-pdf's bundled version
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 interface PDFViewerProps {
   initialFile?: string;
@@ -14,6 +14,12 @@ export default function PDFViewer({ initialFile }: PDFViewerProps) {
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [pdfFile, setPdfFile] = useState<string | null>(initialFile || null);
+
+  const documentOptions = useMemo(() => ({
+    cMapUrl: '/cmaps/',
+    standardFontDataUrl: '/standard_fonts/',
+    wasmUrl: '/wasm/',
+  }), []);
 
   useEffect(() => {
     if (initialFile) {
@@ -64,6 +70,7 @@ export default function PDFViewer({ initialFile }: PDFViewerProps) {
               file={pdfFile}
               onLoadSuccess={onDocumentLoadSuccess}
               className="flex justify-center"
+              options={documentOptions}
             >
               <div className="relative">
                 <Page
