@@ -34,11 +34,8 @@ export default function Home() {
   const [pdfs, setPdfs] = useState<PDF[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [reviewStatus, setReviewStatus] = useState<ReviewStatus | null>(null);
-
-  // TODO: Replace with actual user ID from auth system
-  const userId = 'test-user-id';
-
+  const [reviewStatus, setReviewStatus] = useState<ReviewStatus | null>(null); 
+  
   useEffect(() => {
     // Fetch PDFs
     fetch('/api/pdfs')
@@ -54,7 +51,7 @@ export default function Home() {
       });
 
     // Fetch review status
-    fetch(`/api/review/check?userId=${userId}`)
+    fetch(`/api/review/check`)
       .then(res => res.json())
       .then(data => {
         setReviewStatus(data);
@@ -62,7 +59,7 @@ export default function Home() {
       .catch(err => {
         console.error('Error fetching review status:', err);
       });
-  }, [userId]);
+  }, []);
 
   // Generate enticing review message
   const getReviewMessage = () => {

@@ -85,8 +85,7 @@ Format your response as JSON with the following structure:
 }`;
 
           const result = await model.generateContent(prompt);
-          const response = await result.response;
-          const text = response.text();
+          const text = result.response.text();
 
           // Parse JSON from response (handle markdown code blocks if present)
           const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -119,8 +118,7 @@ Format your response as JSON with the following structure:
 }`;
 
           const result = await model.generateContent(prompt);
-          const response = await result.response;
-          const text = response.text();
+          const text = result.response.text();
 
           // Parse JSON from response (handle markdown code blocks if present)
           const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -134,6 +132,7 @@ Format your response as JSON with the following structure:
 
         return {
           type,
+          question,
           topicInfo,
           attemptId: attempt.id,
           createdAt: attempt.createdAt,
