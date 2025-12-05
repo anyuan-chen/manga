@@ -77,10 +77,6 @@ export default function Home() {
       <Navigation />
       <div className="py-12 px-4">
         <main className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">
-          Manga Library
-        </h1>
-
         {/* Review Banner */}
         {reviewStatus?.hasMistakes && (
           <Link href="/review">
@@ -140,32 +136,16 @@ export default function Home() {
         )}
 
         {!loading && pdfs.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-4">
             {pdfs.map((pdf) => (
               <Link
                 key={pdf.path}
                 href={`/reader?file=${encodeURIComponent(pdf.path)}`}
                 className="block p-6 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors border border-gray-700 hover:border-blue-500"
               >
-                <div className="flex items-center gap-3">
-                  <svg
-                    className="w-8 h-8 text-red-500 flex-shrink-0"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-lg font-semibold text-white truncate">
-                      {pdf.name.replace('.pdf', '')}
-                    </h2>
-                    <p className="text-sm text-gray-400">PDF Document</p>
-                  </div>
-                </div>
+                <h2 className="text-lg font-semibold text-white truncate">
+                  {pdf.name.replace('.pdf', '')}
+                </h2>
               </Link>
             ))}
           </div>

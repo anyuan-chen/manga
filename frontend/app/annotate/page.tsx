@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import Link from 'next/link';
 
-// Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Configure PDF.js worker (local file for reliability)
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 interface Panel {
   id: string;
@@ -45,6 +45,12 @@ export default function AnnotatePage() {
 
   const pageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const documentOptions = useMemo(() => ({
+    cMapUrl: '/cmaps/',
+    standardFontDataUrl: '/standard_fonts/',
+    wasmUrl: '/wasm/',
+  }), []);
 
   useEffect(() => {
     fetchUnlabeledPanels();
@@ -314,6 +320,7 @@ export default function AnnotatePage() {
                   <Document
                     file={pdfFile}
                     onLoadSuccess={onDocumentLoadSuccess}
+                    options={documentOptions}
                   >
                     <div className="relative">
                       <Page
