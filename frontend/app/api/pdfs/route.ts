@@ -11,6 +11,13 @@ export async function GET() {
         description: true,
         filePath: true,
         orderIndex: true,
+        predictedJlptLevel: true,
+        uniqueWordsCount: true,
+        uniqueGrammarCount: true,
+        panelCount: true,
+        totalCharacters: true,
+        avgJlptWords: true,
+        avgJlptGrammar: true,
       },
     });
 
@@ -21,6 +28,15 @@ export async function GET() {
       description: chapter.description,
       path: chapter.filePath ? `/data/chapters/${chapter.filePath}` : null,
       orderIndex: chapter.orderIndex,
+      stats: {
+        predictedJlptLevel: chapter.predictedJlptLevel,
+        uniqueWordsCount: chapter.uniqueWordsCount,
+        uniqueGrammarCount: chapter.uniqueGrammarCount,
+        panelCount: chapter.panelCount,
+        totalCharacters: chapter.totalCharacters,
+        avgJlptWords: chapter.avgJlptWords,
+        avgJlptGrammar: chapter.avgJlptGrammar,
+      },
     }));
 
     return NextResponse.json({ pdfs });

@@ -10,6 +10,15 @@ interface PDF {
   description: string | null;
   path: string | null;
   orderIndex: number;
+  stats: {
+    predictedJlptLevel: number | null;
+    uniqueWordsCount: number | null;
+    uniqueGrammarCount: number | null;
+    panelCount: number | null;
+    totalCharacters: number | null;
+    avgJlptWords: number | null;
+    avgJlptGrammar: number | null;
+  };
 }
 
 interface ReviewStatus {
@@ -140,22 +149,62 @@ export default function Home() {
 
         {!loading && pdfs.length > 0 && (
           <div className="flex flex-col gap-4">
-            {pdfs.filter(pdf => pdf.path).map((pdf) => (
-              <Link
-                key={pdf.id}
-                href={`/reader?file=${encodeURIComponent(pdf.path!)}&chapterId=${pdf.id}`}
-                className="block p-6 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200 hover:border-black"
-              >
-                <h2 className="text-lg font-semibold text-black truncate">
-                  {pdf.name}
-                </h2>
-                {pdf.description && (
-                  <p className="text-sm text-gray-600 mt-1 truncate">
-                    {pdf.description}
-                  </p>
-                )}
-              </Link>
-            ))}
+            {pdfs.filter(pdf => pdf.path).map((pdf) => {
+              const jlptLevel = pdf.stats?.predictedJlptLevel ? Math.round(pdf.stats.predictedJlptLevel) : null;
+              const jlptLabel = jlptLevel ? `N${jlptLevel}` : 'N/A';
+
+              return (
+                <Link
+                  key={pdf.id}
+                  href={`/reader?file=${encodeURIComponent(pdf.path!)}&chapterId=${pdf.id}`}
+                  className="block p-6 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200 hover:border-black"
+                >
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-lg font-semibold text-black truncate">
+                        {pdf.name}
+                      </h2>
+                      {pdf.description && (
+                        <p className="text-sm text-gray-600 mt-1 truncate">
+                          {pdf.description}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* JLPT Level Badge */}
+                    {jlptLevel && (
+                      <div className="flex-shrink-0 px-3 py-1 bg-black text-white text-sm font-semibold rounded">
+                        {jlptLabel}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Stats Row */}
+                  {(pdf.stats?.panelCount || pdf.stats?.uniqueWordsCount || pdf.stats?.uniqueGrammarCount) && (
+                    <div className="flex gap-6 mt-4 text-sm text-gray-600">
+                      {pdf.stats.panelCount && (
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium text-black">{pdf.stats.panelCount}</span>
+                          <span>panels</span>
+                        </div>
+                      )}
+                      {pdf.stats.uniqueWordsCount && (
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium text-black">{pdf.stats.uniqueWordsCount}</span>
+                          <span>words</span>
+                        </div>
+                      )}
+                      {pdf.stats.uniqueGrammarCount && (
+                        <div className="flex items-center gap-1">
+                          <span className="font-medium text-black">{pdf.stats.uniqueGrammarCount}</span>
+                          <span>grammar patterns</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </Link>
+              );
+            })}
           </div>
         )}
         </main>
