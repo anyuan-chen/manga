@@ -5,7 +5,7 @@ import { auth } from '@/lib/auth';
 
 export async function GET(
   request: Request,
-  { params }: { params: { panelId: string } }
+  { params }: { params: Promise<{ panelId: string }> }
 ) {
   try {
     // Get session
@@ -16,7 +16,7 @@ export async function GET(
     }
 
     const userId = session.user.id;
-    const { panelId } = params;
+    const { panelId } = await params;
 
     // Step 1: Check if we should generate questions (rule-based filtering)
     const decision = await decidePanelQuestions(panelId, userId);
