@@ -1,11 +1,20 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { auth } from '@/lib/auth';
 
 export async function POST(request: Request) {
   try {
+    // Get session
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const userId = session.user.id;
+
     const body = await request.json();
     const {
-      userId,
       questionType,
       conceptId,
       conceptType,
@@ -14,9 +23,9 @@ export async function POST(request: Request) {
       timeSpent,
     } = body;
 
-    if (!userId || !questionType) {
+    if (!questionType) {
       return NextResponse.json(
-        { error: 'userId and questionType are required' },
+        { error: 'questionType is required' },
         { status: 400 }
       );
     }

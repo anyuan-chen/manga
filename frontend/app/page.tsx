@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 
 interface PDF {
   name: string;
@@ -28,8 +29,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 py-12 px-4">
-      <main className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-900">
+      <Navigation />
+      <div className="py-12 px-4">
+        <main className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-white mb-8 text-center">
           Manga Library
         </h1>
@@ -82,7 +85,8 @@ export default function Home() {
             ))}
           </div>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
