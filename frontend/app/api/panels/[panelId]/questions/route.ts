@@ -1,19 +1,21 @@
 import { NextResponse } from 'next/server';
 import { decidePanelQuestions } from '@/lib/questionDecision';
 import { generatePanelQuestions } from '@/lib/questionGeneration';
+import { auth } from '@/lib/auth';
 
 export async function GET(
   request: Request,
   { params }: { params: { panelId: string } }
 ) {
   try {
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    // Get session
+    const session = await auth();
 
-    if (!userId) {
-      return NextResponse.json({ error: 'userId is required' }, { status: 400 });
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const userId = session.user.id;
     const { panelId } = params;
 
     // Step 1: Check if we should generate questions (rule-based filtering)

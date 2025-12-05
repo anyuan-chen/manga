@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface ReviewItem {
   type: 'word' | 'grammar';
@@ -22,6 +24,8 @@ interface ReviewItem {
 }
 
 export default function ReviewPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [reviewItems, setReviewItems] = useState<ReviewItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,22 +34,35 @@ export default function ReviewPage() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
 
-  // TODO: Replace with actual user ID from auth system
-  const userId = 'test-user-id';
-
   useEffect(() => {
-    fetch(`/api/review?userId=${userId}`)
-      .then(res => res.json())
+    if (status === "loading") return;
+
+    if (!session) {
+      router.push('/auth/signin?callbackUrl=/review');
+      return;
+    }
+
+    // Fetch review items - no userId needed in query params
+    fetch(`/api/review`)
+      .then(res => {
+        if (res.status === 401) {
+          router.push('/auth/signin?callbackUrl=/review');
+          return null;
+        }
+        return res.json();
+      })
       .then(data => {
-        setReviewItems(data.reviewItems || []);
-        setLoading(false);
+        if (data) {
+          setReviewItems(data.reviewItems || []);
+          setLoading(false);
+        }
       })
       .catch(err => {
         console.error('Error fetching review items:', err);
         setError('Failed to load review questions');
         setLoading(false);
       });
-  }, []);
+  }, [session, status, router]);
 
   const handleAnswerSelect = (index: number) => {
     if (showResult) return;
