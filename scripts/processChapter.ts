@@ -30,8 +30,7 @@ The grammars key must contain an array of objects
 Each grammar object must have the following keys: name (string), pattern (string), explanation (string), and jlptLevel (integer).
 `.trim();
 
-
-export interface Word {
+export type Word = {
   japanese: string;
   reading: string;
   meaning: string;
@@ -39,31 +38,31 @@ export interface Word {
   jlptLevel: number;
 }
 
-export interface GrammaticalStructure {
+export type GrammaticalStructure = {
   name: string;
   pattern: string;
   explanation: string;
   jlptLevel: number;
 }
 
-export interface Panel {
+export type Panel = {
   panelNumber: number;
   words: Word[];
   grammars: GrammaticalStructure[];
 }
 
-interface Page {
+export type ChapterResult = {
+  chapterId: string;
+  pages: Page[];
+}
+
+export type Page = {
   pageNumber: number;
   panels: Panel[];
 }
 
-interface GeminiResult {
+type GeminiResult = {
   panels: Panel[];
-}
-
-export interface ChapterResult {
-  chapterId: string;
-  pages: Page[];
 }
 
 async function splitPdfIntoSinglePagePdfs(

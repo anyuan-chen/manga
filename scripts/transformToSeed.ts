@@ -3,17 +3,17 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { ChapterResult, GrammaticalStructure, Word } from "./processChapter";
 
-export interface PanelWord {
+export type PanelWord = {
   panelId: string;
   wordId: string;
 }
 
-export interface PanelGrammaticalStructure {
+export type PanelGrammaticalStructure = {
     panelId: string;
     grammaticalStructureId: string;
 }
 
-export interface OutputPanel {
+export type OutputPanel = {
     id: string;
     chapterId: string;
     japaneseText: string;
@@ -27,7 +27,7 @@ export interface OutputPanel {
     height: number | null;
 }
 
-export interface OutputGrammaticalStructure {
+export type OutputGrammaticalStructure = {
     id: string;
     name: string;
     pattern: string;
@@ -35,7 +35,7 @@ export interface OutputGrammaticalStructure {
     jlptLevel: number;
 }
 
-export interface OutputWord {
+export type OutputWord = {
     id: string;
     japanese: string;
     reading: string;
@@ -44,7 +44,7 @@ export interface OutputWord {
     jlptLevel: number;
 }
 
-export interface SeedOutput {
+export type SeedOutput = {
     chapterId: string;
     panel: OutputPanel[];
     word: OutputWord[];
@@ -198,11 +198,15 @@ async function run() {
     const chapters = args;
   
     for (const chapter of chapters) {
+
       console.log(`=== Processing chapter: ${chapter} ===`);
       const inputPath = `chapter_outputs/${chapter}.json`
       const outputPath = `seed_outputs/${chapter}.json`
       await outputSeedJSON(inputPath, outputPath);
     }
 }
+
+
+
 
 run();
