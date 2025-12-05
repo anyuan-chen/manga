@@ -196,11 +196,11 @@ export default function AnnotatePage() {
       const width = Math.abs(boundingBox.endX - boundingBox.startX);
       const height = Math.abs(boundingBox.endY - boundingBox.startY);
 
-      ctx.strokeStyle = '#3b82f6';
+      ctx.strokeStyle = '#000000';
       ctx.lineWidth = 3;
       ctx.strokeRect(x, y, width, height);
 
-      ctx.fillStyle = 'rgba(59, 130, 246, 0.1)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
       ctx.fillRect(x, y, width, height);
     }
   }, [boundingBox]);
@@ -221,19 +221,19 @@ export default function AnnotatePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <p className="text-white text-xl">Loading panels...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-black text-xl">Loading panels...</p>
       </div>
     );
   }
 
   if (!panels.length) {
     return (
-      <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center">
-        <p className="text-white text-xl mb-4">No unlabeled panels found!</p>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+        <p className="text-black text-xl mb-4">No unlabeled panels found!</p>
         <Link
           href="/"
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
         >
           Go Home
         </Link>
@@ -242,19 +242,19 @@ export default function AnnotatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4">
+    <div className="min-h-screen bg-white p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white mb-2">Panel Annotation Tool</h1>
-            <p className="text-gray-400">
+            <h1 className="text-2xl font-bold text-black mb-2">Panel Annotation Tool</h1>
+            <p className="text-gray-500">
               Panel {currentPanelIndex + 1} of {panels.length}
             </p>
           </div>
           <Link
             href="/"
-            className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600"
+            className="px-4 py-2 bg-gray-100 text-black rounded-md hover:bg-gray-200"
           >
             Home
           </Link>
@@ -263,25 +263,25 @@ export default function AnnotatePage() {
         {/* Main content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Left: Panel metadata */}
-          <div className="bg-gray-800 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold text-white mb-4">Panel Info</h2>
+          <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+            <h2 className="text-xl font-semibold text-black mb-4">Panel Info</h2>
             <div className="space-y-3">
               <div>
-                <p className="text-sm text-gray-400">Chapter</p>
-                <p className="text-white font-medium">{currentPanel.chapter.title}</p>
+                <p className="text-sm text-gray-500">Chapter</p>
+                <p className="text-black font-medium">{currentPanel.chapter.title}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-400">Order Index</p>
-                <p className="text-white">{currentPanel.orderIndex}</p>
+                <p className="text-sm text-gray-500">Order Index</p>
+                <p className="text-black">{currentPanel.orderIndex}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-400">Japanese Text</p>
-                <p className="text-white break-words">{currentPanel.japaneseText}</p>
+                <p className="text-sm text-gray-500">Japanese Text</p>
+                <p className="text-black break-words">{currentPanel.japaneseText}</p>
               </div>
               {currentPanel.translation && (
                 <div>
-                  <p className="text-sm text-gray-400">Translation</p>
-                  <p className="text-white break-words">{currentPanel.translation}</p>
+                  <p className="text-sm text-gray-500">Translation</p>
+                  <p className="text-black break-words">{currentPanel.translation}</p>
                 </div>
               )}
             </div>
@@ -289,16 +289,16 @@ export default function AnnotatePage() {
 
           {/* Center: PDF viewer */}
           <div className="lg:col-span-2">
-            <div className="bg-gray-800 p-4 rounded-lg">
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <div className="mb-4 text-center">
-                <p className="text-white text-sm mb-2">
+                <p className="text-black text-sm mb-2">
                   Draw a box around the panel on the page
                 </p>
-                <div className="flex items-center justify-center gap-2 text-sm text-gray-400">
+                <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
                   <button
                     onClick={() => setPageNumber((prev) => Math.max(prev - 1, 1))}
                     disabled={pageNumber <= 1}
-                    className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 disabled:opacity-50"
+                    className="px-3 py-1 bg-gray-200 text-black rounded hover:bg-gray-300 disabled:opacity-50"
                   >
                     ←
                   </button>
@@ -308,7 +308,7 @@ export default function AnnotatePage() {
                   <button
                     onClick={() => setPageNumber((prev) => Math.min(prev + 1, numPages))}
                     disabled={pageNumber >= numPages}
-                    className="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600 disabled:opacity-50"
+                    className="px-3 py-1 bg-gray-200 text-black rounded hover:bg-gray-300 disabled:opacity-50"
                   >
                     →
                   </button>
@@ -347,7 +347,7 @@ export default function AnnotatePage() {
               <div className="mt-4 flex items-center justify-center gap-3">
                 <button
                   onClick={skipPanel}
-                  className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600"
+                  className="px-4 py-2 bg-gray-200 text-black rounded-md hover:bg-gray-300"
                 >
                   Skip
                 </button>
@@ -361,7 +361,7 @@ export default function AnnotatePage() {
                 <button
                   onClick={savePosition}
                   disabled={!boundingBox || saving}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {saving ? 'Saving...' : 'Save & Next'}
                 </button>

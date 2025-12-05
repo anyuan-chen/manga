@@ -13,20 +13,20 @@ function SignInContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-gray-800 rounded-lg shadow-xl p-8 border border-gray-700">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-gray-50 rounded-lg shadow-xl p-8 border border-gray-200">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-black mb-2">
             Manga Language Reader
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-500">
             Sign in to track your progress and continue learning
           </p>
         </div>
 
         <button
           onClick={handleGoogleSignIn}
-          className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors"
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-black"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path
@@ -60,8 +60,8 @@ function SignInContent() {
 export default function SignInPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <p className="text-white">Loading...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-black">Loading...</p>
       </div>
     }>
       <SignInContent />
