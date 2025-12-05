@@ -13,26 +13,25 @@ import { PDFDocument } from "pdf-lib";
 
 dotenv.config();
 
-const MODEL = "gemini-2.5-flash";
+const MODEL = "gemini-2.5-pro";
 
 const PROMPT = `
 For the currently uploaded manga page, perform a complete linguistic analysis and output the results as a single JSON object.
 
-The JSON object must strictly adhere to the following structure:
+panels: An array of panels, ordered by the manga reading order (right-to-left, top-to-bottom).
 
-words: Each word object must have the following keys: japanese (string), reading (string), meaning (string), partOfSpeech (string), and jlptLevel (integer).
+Each panel in the array must be an object with the key panelNumber (integer), a key words, and a key grammars.
 
+The words key must contain an array of objects.
+Each word object must have the following keys: japanese (string), reading (string), meaning (string), partOfSpeech (string), and jlptLevel (integer).
 grammars: An array of objects, containing all notable Japanese grammar structures found on the page.
+
+The grammars key must contain an array of objects
 Each grammar object must have the following keys: name (string), pattern (string), explanation (string), and jlptLevel (integer).
-
-Do not include any text outside of the JSON object.
-
 `.trim();
 
 
-
-
-interface Word {
+export interface Word {
   japanese: string;
   reading: string;
   meaning: string;
@@ -40,29 +39,32 @@ interface Word {
   jlptLevel: number;
 }
 
-interface GrammaticalStructure {
+export interface GrammaticalStructure {
   name: string;
   pattern: string;
   explanation: string;
   jlptLevel: number;
 }
 
-interface Page {
-  pageNumber: number;
+export interface Panel {
+  panelNumber: number;
   words: Word[];
   grammars: GrammaticalStructure[];
+}
+
+interface Page {
+  pageNumber: number;
+  panels: Panel[];
 }
 
 interface GeminiResult {
-  words: Word[];
-  grammars: GrammaticalStructure[];
+  panels: Panel[];
 }
 
-interface ChapterResult {
+export interface ChapterResult {
   chapterId: string;
   pages: Page[];
 }
-
 
 async function splitPdfIntoSinglePagePdfs(
   pdfPath: string
@@ -97,6 +99,7 @@ async function askGeminiForPagePdf(pagePdfBytes: Uint8Array): Promise<GeminiResu
   const generativeModel = client.getGenerativeModel({ model: MODEL });
 
   const maxAttempts = 5;
+  const backoffMS = 2000;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
@@ -128,7 +131,9 @@ async function askGeminiForPagePdf(pagePdfBytes: Uint8Array): Promise<GeminiResu
       if (attempt === maxAttempts) {
         throw err;
       }
-      
+      // Wait 2 seconds before retrying (simple exponential backoff could also be used)
+      await new Promise(resolve => setTimeout(resolve, backoffMS));
+
       console.warn(
         `Gemini call failed on attempt ${attempt}/${maxAttempts}; retrying immediately...`
       );
@@ -140,11 +145,13 @@ async function askGeminiForPagePdf(pagePdfBytes: Uint8Array): Promise<GeminiResu
 
 }
 
+
+
 export async function processChapter(
   pdfPath: string,
 ): Promise<void> {
 
-  const chapterId = "chapter1"; // TODO change
+  const chapterId = path.parse(pdfPath).name;
   const absPdf = path.resolve(pdfPath);
   const outputPath = path.join(process.cwd(),
       "chapter_outputs",
@@ -165,17 +172,17 @@ export async function processChapter(
     pages: [],
   }
 
+
   for (let i = 0; i < pagePdfs.length; i++) {
     const pageNumber = i + 1;
     console.log(`Processing page ${pageNumber}/${pagePdfs.length}...`);
     const data = await askGeminiForPagePdf(pagePdfs[i]);
 
-    const page: Page = {
+    const page = {
       pageNumber: pageNumber,
-      words: data.words,
-      grammars: data.grammars
-    };
-
+      panels: data.panels
+    }
+    
     chapterResult.pages.push(page);
     await fs.writeFile(outputPath, JSON.stringify(chapterResult, null, 2), "utf-8");
 
