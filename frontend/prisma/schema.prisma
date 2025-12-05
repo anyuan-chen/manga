@@ -91,6 +91,8 @@ model Panel {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  autoDisqualify Boolean @default(false)
+
   // PDF position metadata
   pageNumber Int?  // Page number in the PDF (0-indexed)
   x          Int?  // X coordinate of the panel on the page (in pixels)
