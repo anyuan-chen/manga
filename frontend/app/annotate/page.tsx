@@ -119,6 +119,23 @@ export default function AnnotatePage() {
     }
   }
 
+  function onPageRenderSuccess() {
+    if (!pageRef.current || !canvasRef.current) return;
+  
+    const pageElement = pageRef.current.querySelector('.react-pdf__Page');
+    if (pageElement) {
+      const canvas = pageElement.querySelector('canvas');
+      if (canvas) {
+        // Resize overlay canvas to match the displayed PDF canvas size
+        canvasRef.current.style.width = `${canvas.offsetWidth}px`;
+        canvasRef.current.style.height = `${canvas.offsetHeight}px`;
+      
+        canvasRef.current.width = canvas.offsetWidth;
+        canvasRef.current.height = canvas.offsetHeight;
+      }
+    }
+  }
+
   const currentPanel = panels[currentPanelIndex];
   const pdfFile = currentPanel?.chapter.filePath
     ? `/data/chapters/${currentPanel.chapter.filePath}`
@@ -362,6 +379,7 @@ export default function AnnotatePage() {
                         renderTextLayer={false}
                         renderAnnotationLayer={false}
                         onLoadSuccess={onPageLoadSuccess}
+                        onRenderSuccess={onPageRenderSuccess}
                       />
                       {/* Drawing canvas overlay */}
                       <canvas
