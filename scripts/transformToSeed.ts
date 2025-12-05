@@ -3,17 +3,17 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { ChapterResult, GrammaticalStructure, Word } from "./processChapter";
 
-interface PanelWord {
+export type PanelWord = {
   panelId: string;
   wordId: string;
 }
 
-interface PanelGrammaticalStructure {
+export type PanelGrammaticalStructure = {
     panelId: string;
     grammaticalStructureId: string;
 }
 
-interface OutputPanel {
+export type OutputPanel = {
     id: string;
     chapterId: string;
     japaneseText: string;
@@ -21,13 +21,13 @@ interface OutputPanel {
     orderIndex: number; 
 
     pageNumber: number;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+    x: number | null;
+    y: number | null;
+    width: number | null;
+    height: number | null;
 }
 
-interface OutputGrammaticalStructure {
+export type OutputGrammaticalStructure = {
     id: string;
     name: string;
     pattern: string;
@@ -35,7 +35,7 @@ interface OutputGrammaticalStructure {
     jlptLevel: number;
 }
 
-interface OutputWord {
+export type OutputWord = {
     id: string;
     japanese: string;
     reading: string;
@@ -44,7 +44,7 @@ interface OutputWord {
     jlptLevel: number;
 }
 
-interface SeedOutput {
+export type SeedOutput = {
     chapterId: string;
     panel: OutputPanel[];
     word: OutputWord[];
@@ -54,16 +54,19 @@ interface SeedOutput {
 }
 
 
-function generateUUID(): string {
+export function generateUUID(): string {
     return crypto.randomUUID();   
 }
-
 
 function getSeedJSON(input: ChapterResult) {
 
     const chapterId = input.chapterId;
-    const wordMap = new Map<Word, string[]>(); // <word in japanese, page + panel numbers>
-    const grammarMap = new Map<GrammaticalStructure, string[]>(); // grammar in japanese, page + panel numbers>
+
+    const uniqueWords = new Map<string, Word>();
+    const wordMap = new Map<string, string[]>(); // <word in japanese, panel ids>
+
+    const uniqueGrammars = new Map<string, GrammaticalStructure>();
+    const grammarMap = new Map<string, string[]>(); // grammar in japanese, panel ids>
 
     const panelWordTable: PanelWord[] = [];
     const panelGrammaticalStructureTable: PanelGrammaticalStructure[] = [];
@@ -80,6 +83,7 @@ function getSeedJSON(input: ChapterResult) {
             console.log(`Page ${page.pageNumber} doesn't have any panels`);
             continue;
         }
+
         for (const panel of page.panels) {
             const panelId = generateUUID();
 
@@ -87,7 +91,10 @@ function getSeedJSON(input: ChapterResult) {
             let translation = "";
 
             for (const word of panel.words) {
-                wordMap.set(word, [...wordMap.get(word) ?? [], panelId]);
+                wordMap.set(word.japanese, [...wordMap.get(word.japanese) ?? [], panelId]);
+                if (!uniqueWords.has(word.japanese)) {
+                    uniqueWords.set(word.japanese, word);
+                }
                 japaneseText += word.japanese;
                 translation += word.meaning;
             }
@@ -99,24 +106,32 @@ function getSeedJSON(input: ChapterResult) {
                 translation,
                 orderIndex,
                 pageNumber: page.pageNumber,
-                x: 0,
-                y: 0,
-                width: 0,
-                height: 0
+                x: null,
+                y: null,
+                width: null,
+                height: null
             });
 
             orderIndex += 1; // every panel gets an order index
 
             if (panel.grammars) { // some panels might not have grammars
                 for (const grammar of panel.grammars) {
-                    grammarMap.set(grammar, [...grammarMap.get(grammar) ?? [], panelId]);
+                    grammarMap.set(grammar.name, [...grammarMap.get(grammar.name) ?? [], panelId]);
+                    if (!uniqueGrammars.has(grammar.name)) {
+                        uniqueGrammars.set(grammar.name, grammar);
+                    }
                 }
             }
         }
     }
 
-    for (const [word, panelIds] of wordMap.entries()) {
+    for (const [japanese, panelIds] of wordMap.entries()) {
         const wordId = generateUUID();
+        const word = uniqueWords.get(japanese);
+        if (!word) {
+            console.warn(`uh oh, we don't have the word object for ${japanese}, weird...`);
+            continue;
+        }
         outputWords.push({
             id: wordId,
             ...word
@@ -130,8 +145,13 @@ function getSeedJSON(input: ChapterResult) {
         }
     } 
 
-    for (const [grammaticalStructure, panelIds] of grammarMap.entries()) {
+    for (const [name, panelIds] of grammarMap.entries()) {
         const grammaticalStructureId = generateUUID();
+        const grammaticalStructure = uniqueGrammars.get(name);
+        if (!grammaticalStructure) {
+            console.warn(`uh oh, we don't have the grammar object for ${name}, weird...`);
+            continue;
+        }
         outputGrammaticalStructure.push({
             id: grammaticalStructureId,
             ...grammaticalStructure
@@ -178,11 +198,15 @@ async function run() {
     const chapters = args;
   
     for (const chapter of chapters) {
+
       console.log(`=== Processing chapter: ${chapter} ===`);
       const inputPath = `chapter_outputs/${chapter}.json`
       const outputPath = `seed_outputs/${chapter}.json`
       await outputSeedJSON(inputPath, outputPath);
     }
 }
+
+
+
 
 run();
