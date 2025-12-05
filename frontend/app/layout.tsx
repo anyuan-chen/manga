@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Manga Language Reader",
+  title: "yomusensei",
   description: "Learn Japanese through manga",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

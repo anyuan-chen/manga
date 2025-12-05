@@ -7,8 +7,8 @@ import { Suspense } from 'react';
 const PDFViewer = dynamic(() => import('@/components/PDFViewer'), {
   ssr: false,
   loading: () => (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <p className="text-white">Loading PDF viewer...</p>
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <p className="text-black">Loading PDF viewer...</p>
     </div>
   ),
 });
@@ -18,7 +18,7 @@ function ReaderContent() {
   const file = searchParams.get('file');
 
   return (
-    <main className="min-h-screen bg-gray-900">
+    <main className="min-h-screen bg-white">
       <PDFViewer initialFile={file || undefined} />
     </main>
   );
@@ -27,8 +27,8 @@ function ReaderContent() {
 export default function ReaderPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <p className="text-white">Loading...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-black">Loading...</p>
       </div>
     }>
       <ReaderContent />

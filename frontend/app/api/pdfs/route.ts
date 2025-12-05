@@ -1,30 +1,31 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/db';
 
 export async function GET() {
   try {
-    const chaptersDir = path.join(process.cwd(), 'public', 'data', 'chapters');
+    const chapters = await prisma.chapter.findMany({
+      orderBy: { orderIndex: 'asc' },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        filePath: true,
+        orderIndex: true,
+      },
+    });
 
-    // Check if directory exists
-    if (!fs.existsSync(chaptersDir)) {
-      return NextResponse.json({ pdfs: [] });
-    }
+    // Map to the expected format with path for backward compatibility
+    const pdfs = chapters.map(chapter => ({
+      id: chapter.id,
+      name: chapter.title,
+      description: chapter.description,
+      path: chapter.filePath ? `/data/chapters/${chapter.filePath}` : null,
+      orderIndex: chapter.orderIndex,
+    }));
 
-    // Read all files in the directory
-    const files = fs.readdirSync(chaptersDir);
-
-    // Filter only PDF files
-    const pdfFiles = files
-      .filter(file => file.toLowerCase().endsWith('.pdf'))
-      .map(file => ({
-        name: file,
-        path: `/data/chapters/${file}`,
-      }));
-
-    return NextResponse.json({ pdfs: pdfFiles });
+    return NextResponse.json({ pdfs });
   } catch (error) {
-    console.error('Error reading PDF directory:', error);
-    return NextResponse.json({ error: 'Failed to read PDFs' }, { status: 500 });
+    console.error('Error fetching chapters from database:', error);
+    return NextResponse.json({ error: 'Failed to fetch chapters' }, { status: 500 });
   }
 }
