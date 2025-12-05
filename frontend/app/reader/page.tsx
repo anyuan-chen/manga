@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
 const PDFViewer = dynamic(() => import('@/components/PDFViewer'), {
@@ -17,9 +17,15 @@ function ReaderContent() {
   const searchParams = useSearchParams();
   const file = searchParams.get('file');
 
+  if (!file) {
+    redirect('/');
+  }
+
+  const chapterId = searchParams.get('chapterId');
+  
   return (
     <main className="min-h-screen bg-white">
-      <PDFViewer initialFile={file || undefined} />
+      <PDFViewer initialFile={file} chapterId={chapterId} />
     </main>
   );
 }

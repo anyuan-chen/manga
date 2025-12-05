@@ -18,11 +18,22 @@ interface Panel {
   y: number | null;
   width: number | null;
   height: number | null;
+  autoDisqualify?: boolean;
   chapter: {
     id: string;
     title: string;
     filePath: string | null;
   };
+}
+
+interface LabeledPanel {
+  id: string;
+  orderIndex: number;
+  pageNumber: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 interface BoundingBox {
@@ -42,6 +53,7 @@ export default function AnnotatePage() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [pageScale, setPageScale] = useState(1);
   const [saving, setSaving] = useState(false);
+  const [labeledPanels, setLabeledPanels] = useState<LabeledPanel[]>([]);
 
   const pageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -67,6 +79,28 @@ export default function AnnotatePage() {
       setLoading(false);
     }
   }
+
+  // Fetch labeled panels when current panel changes (to get panels for the same chapter)
+  useEffect(() => {
+    if (panels.length > 0 && panels[currentPanelIndex]) {
+      fetchLabeledPanels(panels[currentPanelIndex].chapterId);
+    }
+  }, [panels, currentPanelIndex]);
+
+  async function fetchLabeledPanels(chapterId: string) {
+    try {
+      const res = await fetch(`/api/panels/labeled?chapterId=${chapterId}`);
+      const data = await res.json();
+      setLabeledPanels(data.panels || []);
+    } catch (error) {
+      console.error('Error fetching labeled panels:', error);
+    }
+  }
+
+  // Get labeled panels for the current page
+  const currentPageLabeledPanels = useMemo(() => {
+    return labeledPanels.filter(panel => panel.pageNumber === pageNumber - 1); // pageNumber is 1-indexed, panel.pageNumber is 0-indexed
+  }, [labeledPanels, pageNumber]);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
@@ -333,11 +367,26 @@ export default function AnnotatePage() {
                       <canvas
                         ref={canvasRef}
                         className="absolute top-0 left-0 cursor-crosshair"
-                        onMouseDown={handleMouseDown}
-                        onMouseMove={handleMouseMove}
                         onMouseUp={handleMouseUp}
                         onMouseLeave={handleMouseUp}
                       />
+                      {/* Labeled panels dots */}
+                      {currentPageLabeledPanels.map((panel) => (
+                        <button
+                          key={panel.id}
+                          className="absolute w-4 h-4 bg-green-500 rounded-full border-2 border-white hover:bg-green-600 z-10 shadow-sm transition-transform hover:scale-110"
+                          style={{
+                            left: `${(panel.x + panel.width) / pageScale}px`,
+                            top: `${(panel.y + panel.height) / pageScale}px`,
+                            transform: 'translate(-50%, -50%)',
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log('Clicked panel:', panel.id);
+                          }}
+                          title={`Panel ${panel.orderIndex}`}
+                        />
+                      ))}
                     </div>
                   </Document>
                 </div>

@@ -143,7 +143,7 @@ export default function Home() {
             {pdfs.filter(pdf => pdf.path).map((pdf) => (
               <Link
                 key={pdf.id}
-                href={`/reader?file=${encodeURIComponent(pdf.path!)}`}
+                href={`/reader?file=${encodeURIComponent(pdf.path!)}&chapterId=${pdf.id}`}
                 className="block p-6 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200 hover:border-black"
               >
                 <h2 className="text-lg font-semibold text-black truncate">
