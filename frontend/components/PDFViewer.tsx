@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Mic, MicOff } from 'lucide-react';
+import PanelQuestionModal from './PanelQuestionModal';
 
 // Configure PDF.js worker - using local file matching react-pdf's bundled version
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
@@ -43,6 +44,11 @@ export default function PDFViewer({ initialFile, chapterId }: PDFViewerProps) {
   const [panels, setPanels] = useState<Panel[]>([]);
   const [pageScale, setPageScale] = useState(1);
   const pageRef = useRef<HTMLDivElement>(null);
+
+  // Modal State
+  const [selectedPanelId, setSelectedPanelId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPosition, setModalPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   // Keep ref in sync with state
   useEffect(() => {
@@ -231,7 +237,13 @@ export default function PDFViewer({ initialFile, chapterId }: PDFViewerProps) {
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  console.log('Clicked panel:', panel.id);
+                  const rect = (e.target as HTMLElement).getBoundingClientRect();
+                  setModalPosition({
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2,
+                  });
+                  setSelectedPanelId(panel.id);
+                  setIsModalOpen(true);
                 }}
                 title={`Panel ${panel.orderIndex}`}
               />
@@ -301,6 +313,19 @@ export default function PDFViewer({ initialFile, chapterId }: PDFViewerProps) {
           </div>
         )}
       </div>
+
+      {/* Question Modal */}
+      {selectedPanelId && (
+        <PanelQuestionModal
+          panelId={selectedPanelId}
+          isOpen={isModalOpen}
+          position={modalPosition}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedPanelId(null);
+          }}
+        />
+      )}
     </div>
   );
 }
