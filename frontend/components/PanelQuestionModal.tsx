@@ -30,38 +30,58 @@ export default function PanelQuestionModal({ panelId, isOpen, onClose, position 
   const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
   const [popoverStyle, setPopoverStyle] = useState<React.CSSProperties>({});
 
-  // Calculate popover position
+  // Calculate popover position - anchor to the circle
   useEffect(() => {
     if (isOpen) {
       const modalWidth = 400;
       const modalMaxHeight = 600;
-      const offset = 20;
+      const offset = 15; // Distance from circle
 
+      // Default: position to the right and slightly below the circle
       let left = position.x + offset;
-      let top = position.y + offset;
+      let top = position.y - 60; // Start a bit above the circle vertically
 
-      // Adjust if too far right
-      if (left + modalWidth > window.innerWidth) {
+      // If too far right, position to the left of the circle
+      if (left + modalWidth > window.innerWidth - 20) {
         left = position.x - modalWidth - offset;
       }
 
-      // Adjust if too far down
-      if (top + modalMaxHeight > window.innerHeight) {
-        top = Math.max(20, window.innerHeight - modalMaxHeight - 20);
+      // If still off screen to the left, center it
+      if (left < 20) {
+        left = Math.max(20, (window.innerWidth - modalWidth) / 2);
       }
 
-      // Ensure minimum distance from edges
-      left = Math.max(20, Math.min(left, window.innerWidth - modalWidth - 20));
+      // Adjust vertical position if too far down
+      if (top + modalMaxHeight > window.innerHeight - 20) {
+        top = window.innerHeight - modalMaxHeight - 20;
+      }
+
+      // Ensure not too far up
       top = Math.max(20, top);
 
       setPopoverStyle({
         position: 'fixed',
         left: `${left}px`,
         top: `${top}px`,
-        transformOrigin: `${position.x - left}px ${position.y - top}px`,
       });
     }
   }, [isOpen, position]);
+
+  // Lock scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position and lock scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore scroll
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   // Fetch questions when modal opens
   useEffect(() => {
@@ -160,15 +180,9 @@ export default function PanelQuestionModal({ panelId, isOpen, onClose, position 
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Popover - no backdrop */}
       <div
-        className="fixed inset-0 z-40 bg-black bg-opacity-30"
-        onClick={handleClose}
-      />
-
-      {/* Popover */}
-      <div
-        className="z-50 bg-white rounded-lg shadow-2xl w-[400px] max-h-[600px] overflow-y-auto animate-in fade-in zoom-in duration-200"
+        className="z-50 bg-white rounded-lg shadow-2xl w-[400px] max-h-[600px] overflow-y-auto animate-in fade-in zoom-in duration-200 border-2 border-blue-400"
         style={popoverStyle}
         onClick={(e) => e.stopPropagation()}
       >

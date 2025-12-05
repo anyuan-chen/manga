@@ -70,7 +70,8 @@ export async function decidePanelQuestions(
   ];
 
   // Rule 3: Skip if ALL concepts are mastered (100% success with 2+ attempts)
-  const allMastered = allPerformance.every(
+  // Only check if there's performance data (user has attempted concepts)
+  const allMastered = allPerformance.length > 0 && allPerformance.every(
     p => p.successRate === 1.0 && p.attemptCount >= 2
   );
 

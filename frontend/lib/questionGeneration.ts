@@ -1,14 +1,14 @@
-import { prisma } from './db';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { synthesizeUserContext } from './userContext';
+import { prisma } from "./db";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { synthesizeUserContext } from "./userContext";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export interface GeneratedQuestion {
-  type: 'word' | 'grammar' | 'reading_comprehension';
-  conceptId?: string;  // For word/grammar questions
-  conceptType?: 'word' | 'grammar';  // For word/grammar questions
+  type: "word" | "grammar" | "reading_comprehension";
+  conceptId?: string; // For word/grammar questions
+  conceptType?: "word" | "grammar"; // For word/grammar questions
   question: string;
   options: string[];
   correctAnswer: number;
@@ -40,7 +40,7 @@ export async function generatePanelQuestions(
   });
 
   if (!panel) {
-    throw new Error('Panel not found');
+    throw new Error("Panel not found");
   }
 
   // Get user performance context
@@ -54,7 +54,11 @@ export async function generatePanelQuestions(
 PANEL TEXT:
 ${panel.japaneseText}
 
-${userContext ? `USER PERFORMANCE:\n${userContext}` : 'USER PERFORMANCE:\nNo previous attempts.'}
+${
+  userContext
+    ? `USER PERFORMANCE:\n${userContext}`
+    : "USER PERFORMANCE:\nNo previous attempts."
+}
 
 CONCEPTS TAGGED IN THIS PANEL (for tracking):
 ${conceptList}
@@ -100,14 +104,14 @@ Return as JSON array:
     // Parse JSON from response
     const jsonMatch = text.match(/\[[\s\S]*\]/);
     if (!jsonMatch) {
-      throw new Error('Failed to parse LLM response');
+      throw new Error("Failed to parse LLM response");
     }
 
     const questions = JSON.parse(jsonMatch[0]) as GeneratedQuestion[];
     return questions.slice(0, 3);
   } catch (error) {
-    console.error('Failed to generate questions:', error);
-    throw new Error('Question generation failed');
+    console.error("Failed to generate questions:", error);
+    throw new Error("Question generation failed");
   }
 }
 
@@ -129,5 +133,5 @@ function buildConceptList(panel: any): string {
     lines.push(`- [GRAMMAR] ${grammar.name} (ID: ${grammar.id})`);
   }
 
-  return lines.length > 0 ? lines.join('\n') : 'No concepts tagged';
+  return lines.length > 0 ? lines.join("\n") : "No concepts tagged";
 }
