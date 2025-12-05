@@ -8,12 +8,26 @@ interface PDF {
   path: string;
 }
 
+interface ReviewStatus {
+  hasMistakes: boolean;
+  totalCount?: number;
+  examples?: {
+    words: Array<{ japanese: string; reading?: string; meaning: string }>;
+    grammar: Array<{ name: string; pattern: string }>;
+  };
+}
+
 export default function Home() {
   const [pdfs, setPdfs] = useState<PDF[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reviewStatus, setReviewStatus] = useState<ReviewStatus | null>(null);
+
+  // TODO: Replace with actual user ID from auth system
+  const userId = 'test-user-id';
 
   useEffect(() => {
+    // Fetch PDFs
     fetch('/api/pdfs')
       .then(res => res.json())
       .then(data => {
@@ -25,7 +39,37 @@ export default function Home() {
         setError('Failed to load PDFs');
         setLoading(false);
       });
-  }, []);
+
+    // Fetch review status
+    fetch(`/api/review/check?userId=${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        setReviewStatus(data);
+      })
+      .catch(err => {
+        console.error('Error fetching review status:', err);
+      });
+  }, [userId]);
+
+  // Generate enticing review message
+  const getReviewMessage = () => {
+    if (!reviewStatus?.hasMistakes || !reviewStatus.examples) return '';
+
+    const { words, grammar } = reviewStatus.examples;
+    const parts: string[] = [];
+
+    if (words.length > 0) {
+      const wordText = words[0].japanese;
+      parts.push(wordText);
+    }
+
+    if (grammar.length > 0) {
+      const grammarText = grammar[0].pattern;
+      parts.push(grammarText);
+    }
+
+    return parts.join(' and ');
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4">
@@ -33,6 +77,47 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-white mb-8 text-center">
           Manga Library
         </h1>
+
+        {/* Review Banner */}
+        {reviewStatus?.hasMistakes && (
+          <Link href="/review">
+            <div className="mb-8 p-6 bg-gradient-to-r from-purple-900 to-blue-900 border border-purple-500 rounded-lg hover:from-purple-800 hover:to-blue-800 transition-all cursor-pointer">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-semibold text-white mb-2">
+                    Ready to review your mistakes?
+                  </h2>
+                  <p className="text-purple-200">
+                    Practice and master <span className="font-bold text-white">{getReviewMessage()}</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-white">
+                      {reviewStatus.totalCount}
+                    </div>
+                    <div className="text-sm text-purple-200">
+                      {reviewStatus.totalCount === 1 ? 'mistake' : 'mistakes'}
+                    </div>
+                  </div>
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </Link>
+        )}
 
         {loading && (
           <p className="text-center text-gray-400">Loading PDFs...</p>
