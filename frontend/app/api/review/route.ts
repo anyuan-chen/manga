@@ -77,7 +77,7 @@ export async function GET(request: Request) {
           // Generate question with Gemini
           const prompt = `Generate a multiple-choice question to test the Japanese word "${word.japanese}" (${word.reading}), which means "${word.meaning}".
 The question should help the learner practice this word in context.
-Format your response as JSON with the following structure:
+DO NOT RETURN MARKDOWN. Format your response as JSON with the following structure:
 {
   "question": "the question text in English",
   "options": ["option A", "option B", "option C", "option D"],
@@ -110,7 +110,7 @@ Format your response as JSON with the following structure:
           const prompt = `Generate a multiple-choice question to test the Japanese grammatical structure "${grammar.name}" (pattern: ${grammar.pattern}).
 Explanation: ${grammar.explanation}
 The question should help the learner practice this grammar point in context.
-Format your response as JSON with the following structure:
+DO NOT RETURN MARKDOWN. Format your response as JSON with the following structure:
 {
   "question": "the question text in English",
   "options": ["option A", "option B", "option C", "option D"],
