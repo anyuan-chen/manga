@@ -79,6 +79,15 @@ model Chapter {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  // Chapter statistics and metadata
+  predictedJlptLevel Float?   // Average JLPT level (1-5) from all words & grammar
+  uniqueWordsCount   Int?     // Number of unique words in this chapter
+  uniqueGrammarCount Int?     // Number of unique grammatical patterns
+  panelCount         Int?     // Total number of panels
+  totalCharacters    Int?     // Total Japanese character count
+  avgJlptWords       Float?   // Average JLPT level from words only
+  avgJlptGrammar     Float?   // Average JLPT level from grammar only
+
   panels Panel[]
 }
 
