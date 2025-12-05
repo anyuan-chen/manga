@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 
 interface ReviewItem {
   type: 'word' | 'grammar';
+  question: string;
   topicInfo: {
     japanese?: string;
     reading?: string;
@@ -229,7 +230,7 @@ export default function ReviewPage() {
             {/* Question */}
             <div className="mb-6">
               <h2 className="text-xl text-black mb-4">
-                Choose the correct answer:
+                {currentItem.question} Choose the correct answer:
               </h2>
               <div className="space-y-3">
                 {currentItem.topicInfo.options.map((option, index) => {
@@ -296,9 +297,9 @@ export default function ReviewPage() {
                 </button>
               )}
             </div>
-          </div>
-        ) : (
-          <div className="bg-gray-50 rounded-lg p-8 border border-gray-200 text-center">
+          </div>) 
+          : 
+          (<div className="bg-gray-50 rounded-lg p-8 border border-gray-200 text-center">
             <h2 className="text-3xl font-bold text-black mb-4">
               Review Complete!
             </h2>

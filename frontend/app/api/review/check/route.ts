@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { auth } from '@/lib/auth';
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    
+    const session = await auth();
+
+    const userId = session?.user.id;
 
     if (!userId) {
-      return NextResponse.json({ error: 'userId is required' }, { status: 400 });
+      return NextResponse.json({ error: 'User is not signed in'}, { status: 400 });
     }
 
     // Check for incorrect word attempts
